@@ -1,10 +1,11 @@
 const express = require("express");
+const CollectionControllers = require("../controllers/CollectionControllers");
 
 const router = express.Router();
 
-app.get("/")
-app.post("/create")
-app.put("/:id")
-app.delete("/:id")
+app.get("/", CollectionControllers.getAllCollection);
+app.post("/create", CollectionControllers.createCollection);
+app.put("/:id", CollectionControllers.updateCollection);
+app.delete("/:id", deleteCollection);
 
 module.exports = router;
