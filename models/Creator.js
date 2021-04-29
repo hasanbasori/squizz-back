@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Creator = sequelize.definee("Creator", {
+  const Creator = sequelize.define("Creator", {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -48,4 +48,5 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
     });
   };
+  return Creator;
 };

@@ -52,4 +52,5 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
     });
   };
+  return Question;
 };
