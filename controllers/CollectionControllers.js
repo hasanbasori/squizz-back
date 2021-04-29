@@ -4,9 +4,11 @@ const { Collection } = require("../models");
 
 exports.getAllCollection = async (req, res, next) => {
   try {
+    const { id } = req.params;
     const allCollection = await Collection.findAll({
       order: [["createdAt", "desc"]],
       attributes: ["name", "description"],
+      where: {id}
     });
 
     res.status(200).json({ allCollection });
