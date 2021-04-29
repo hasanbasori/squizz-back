@@ -8,7 +8,7 @@ router.post("/register", CreatorControllers.registerCreator);
 router.post("/login", CreatorControllers.loginCreator);
 router.put(
   "/:id",
-  CreatorControllers.updateCreator,
+  CreatorControllers.protectCreator,
   CreatorControllers.updateCreator
 );
 router.delete(
