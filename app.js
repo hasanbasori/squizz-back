@@ -3,13 +3,20 @@ const express = require("express");
 const app = express();
 const errorMiddleware = require("./middlewares/error");
 const cors = require("cors");
+
+const CollectionRoute = require("./routes/CollectionRoute");
+const CreatorRoute = require("./routes/CreatorRoute");
+const QuestionRoute = require("./routes/QuestionRoute");
+const QuizRoute = require("./routes/QuizRoute");
+const UserRoute = require("./routes/UserRoute");
+
 // const { sequelize } = require('./models')
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/collection",CollectionRoute);
+app.use("/collection", CollectionRoute);
 app.use("/creator", CreatorRoute);
 app.use("/question", QuestionRoute);
 app.use("/quiz", QuizRoute);

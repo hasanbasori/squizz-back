@@ -3,9 +3,9 @@ const CollectionControllers = require("../controllers/CollectionControllers");
 
 const router = express.Router();
 
-app.get("/", CollectionControllers.getAllCollection);
-app.post("/create", CollectionControllers.createCollection);
-app.put("/:id", CollectionControllers.updateCollection);
-app.delete("/:id", deleteCollection);
+router.get("/", CollectionControllers.getAllCollection);
+router.post("/create", CollectionControllers.createCollection);
+router.put("/:id", CollectionControllers.updateCollection);
+router.delete("/:id", CollectionControllers.deleteCollection);
 
 module.exports = router;
