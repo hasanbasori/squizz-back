@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   // many Question to one Quiz
   Question.associate = (models) => {
-    Quetion.belongTo(models.Quiz, {
+    Question.belongsTo(models.Quiz, {
       foreignKey: {
         name: "quiz_id",
         allowNull: false,
@@ -54,3 +54,4 @@ module.exports = (sequelize, DataTypes) => {
   };
   return Question;
 };
+

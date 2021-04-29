@@ -9,7 +9,7 @@ const QuestionRoute = require("./routes/QuestionRoute");
 const QuizRoute = require("./routes/QuizRoute");
 const UserRoute = require("./routes/UserRoute");
 
-const { sequelize } = require('./models')
+// const { sequelize } = require('./models')
 
 app.use(cors());
 app.use(express.json());
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 app.use(errorMiddleware);
 
-sequelize.sync({ force: true}).then(() => console.log('DB sync'))
+// sequelize.sync({ force: true}).then(() => console.log('DB sync'))
 
 const port = process.env.PORT;
 app.listen(port, () => console.log(`server is running on port ${port}`));

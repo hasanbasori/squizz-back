@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   // many User to one Creator
   User.associate = (models) => {
-    User.belongTo(models.Creator, {
+    User.belongsTo(models.Creator, {
       foreignKey: {
         name: "creator_id",
         allowNull: false,

@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Collection = require("../models/Collection");
+const { Collection } = require("../models");
 
 exports.getAllCollection = async (req, res, next) => {
   try {
@@ -8,6 +8,7 @@ exports.getAllCollection = async (req, res, next) => {
       order: [["createdAt", "desc"]],
       attributes: ["name", "description"],
     });
+
     res.status(200).json({ allCollection });
   } catch (err) {
     next(err);
@@ -32,9 +33,9 @@ exports.createCollection = async (req, res, next) => {
 exports.updateCollection = async (req, res, next) => {
   try {
     const { name, description } = req.body;
+    const { id } = req.params;
 
     await Collection.update({ name, description }, { where: { id } });
-
     res.status(200).json({ message: "Collection Successfully Updated!" });
   } catch (err) {
     next(err);
@@ -43,7 +44,7 @@ exports.updateCollection = async (req, res, next) => {
 
 exports.deleteCollection = async (req, res, next) => {
   try {
-    const { id } = params;
+    const { id } = req.params;
 
     const collection = await Collection.findOne({ where: { id } });
     if (!collection)
