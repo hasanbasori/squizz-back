@@ -33,7 +33,8 @@ exports.createUser = async (req, res, next) => {
 //update users
 exports.updateUser = async (req, res, next) => {
   try {
-    const { id, score } = req.params;
+    const { id } = req.params;
+    const { score } = req.body;
 
     await User.update({ score }, { where: { id } });
     res.status(200).json({ message: "Successfully Updated" });
