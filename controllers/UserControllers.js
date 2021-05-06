@@ -16,7 +16,7 @@ exports.getUser = async (req, res, next) => {
 };
 
 // name users
-exports.nameUser = async (req, res, next) => {
+exports.createUser = async (req, res, next) => {
   try {
     const { name } = req.body;
     const user = User.create({
