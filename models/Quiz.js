@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 
   // many Quiz to one Creator
   Quiz.associate = (models) => {
-    Quiz.belongTo(models.Creator, {
+    Quiz.belongsTo(models.Creator, {
       foreignKey: {
         name: "creator_id",
         allowNull: false,
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   // many Quiz to one Collection
   Quiz.associate = (models) => {
-    Quiz.belongTo(models.Collection, {
+    Quiz.belongsTo(models.Collection, {
       foreignKey: {
         name: "collection_id",
         allowNull: false,
