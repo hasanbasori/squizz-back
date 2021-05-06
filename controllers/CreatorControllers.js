@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { Creator } = require("../models/Creator");
+const { Creator } = require("../models");
 
 // protect
 exports.protectCreator = async (req, res, next) => {
