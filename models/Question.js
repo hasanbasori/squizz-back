@@ -18,11 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     answer_options: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    answer_1: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+    },  
     answer_1: {
       type: DataTypes.STRING,
       allowNull: false,

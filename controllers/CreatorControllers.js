@@ -8,8 +8,8 @@ exports.protectCreator = async (req, res, next) => {
     let token = null;
 
     if (
-      req.hearders.authorization &&
-      req.headers.authorization.startWith("Bearer")
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
     )
       token = req.headers.authorization.split(" ")[1];
 
@@ -59,12 +59,12 @@ exports.registerCreator = async (req, res, next) => {
       role,
     });
 
-    const payload = { id, username, email, profile_img, role };
+    const payload = { username, email, profile_img, role };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: +process.env.JWT_EXPIRES_IN,
     });
 
-    res.status(200).json({ message: token });
+    res.status(200).json({ token });
   } catch (err) {
     next(err);
   }
@@ -86,12 +86,12 @@ exports.loginCreator = async (req, res, next) => {
       return res.status(400).json({ message: "Incorrect Password!" });
 
     const payload = {
-      id,
-      name,
-      username,
-      email,
-      profile_img,
-      role,
+      id: creator.id,
+      name: creator.name,
+      username: creator.username,
+      email: creator.email,
+      profile_img: creator.profile_img,
+      role: creator.role,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -108,11 +108,25 @@ exports.loginCreator = async (req, res, next) => {
 exports.updateCreator = async (req, res, next) => {
   try {
     const { name, username, email, profile_img, password, role } = req.body;
+    const { id } = req.params;
+
+    const hashedPassword = await bcrypt.hash(
+      password,
+      +process.env.BCRYPT_SALT
+    );
 
     await Creator.update(
-      { name, username, email, profile_img, password, role },
-      { where: { id } }
+      {
+        name,
+        username,
+        email,
+        profile_img,
+        password: hashedPassword,
+        role,
+      },
+      { where: {id} }
     );
+
     res.status(200).json({ message: "Successfully Creator's Info Updated!." });
   } catch (err) {
     next(err);

@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   // one Creator to many Users
   Creator.associate = (models) => {
-    Creator.hasMany(models.Users, {
+    Creator.hasMany(models.User, {
       foreignKey: {
         name: "creator_id",
         allowNull: false,
@@ -36,9 +36,8 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "RESTRICT",
       onDelete: "RESTRICT,",
     });
-  };
-  // one Creator to many Quiz
-  Creator.associate = (models) => {
+
+    // one Creator to many Quiz
     Creator.hasMany(models.Quiz, {
       foreignKey: {
         name: "creator_id",

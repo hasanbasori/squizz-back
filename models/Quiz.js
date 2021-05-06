@@ -15,9 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "RESTRICT",
       onDelete: "RESTRICT",
     });
-  };
-  // many Quiz to one Collection
-  Quiz.associate = (models) => {
+
+    // many Quiz to one Collection
     Quiz.belongsTo(models.Collection, {
       foreignKey: {
         name: "collection_id",
@@ -26,9 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "RESTRICT",
       onDelete: "RESTRICT",
     });
-  };
-  // one Quiz to many Question
-  Quiz.associate = (models) => {
+
+    // one Quiz to many Question
     Quiz.hasMany(models.Question, {
       foreignKey: {
         name: "quiz_id",
