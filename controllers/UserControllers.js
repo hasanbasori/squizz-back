@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models");
+const { User, Creator } = require("../models");
 
 // get
 exports.getUser = async (req, res, next) => {
@@ -19,9 +19,10 @@ exports.getUser = async (req, res, next) => {
 exports.createUser = async (req, res, next) => {
   try {
     const { name } = req.body;
-    const user = User.create({
+    const user = await User.create({
       name,
       score: 0,
+      creator_id: req.creator.id,
     });
 
     res.status(200).json({ message: "Successfully Name Created" });

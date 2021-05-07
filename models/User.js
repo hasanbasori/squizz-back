@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0,
     },
   });
-  // many User to one Creator
+  // one User to many UserHistory
   User.associate = (models) => {
-    User.belongsTo(models.Creator, {
+    User.hasMany(models.UserHistory, {
       foreignKey: {
-        name: "creator_id",
+        name: "user_history_id",
         allowNull: false,
       },
       onUpdate: "RESTRICT",

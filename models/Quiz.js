@@ -3,6 +3,9 @@ module.exports = (sequelize, DataTypes) => {
     pin: {
       type: DataTypes.INTEGER,
     },
+    link: {
+      type: Datatypes.INTEGER,
+    },
   });
 
   // many Quiz to one Creator
@@ -35,6 +38,8 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "RESTRICT",
       onDelete: "RESTRICT",
     });
+
+    // one quiz to many QuizHistory
   };
   return Quiz;
 };

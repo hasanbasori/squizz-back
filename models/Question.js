@@ -18,22 +18,25 @@ module.exports = (sequelize, DataTypes) => {
     answer_options: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },  
-    answer_1: {
+    },
+    option_1: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    answer_2: {
+    option_2: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    answer_3: {
+    option_3: {
       type: DataTypes.STRING,
     },
-    answer_4: {
+    option_4: {
       type: DataTypes.STRING,
     },
     question_img: {
+      type: DataTypes.STRING,
+    },
+    answer: {
       type: DataTypes.STRING,
     },
   });
@@ -47,7 +50,16 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "RESTRICT",
       onDelete: "RESTRICT",
     });
+
+    // one Question to many PointRecord
+    Question.hasMany(models.PointRecord, {
+      foreignKey: {
+        name: "point_record_id",
+        allowNull: false,
+      },
+      onUpdate: "RESTRICT",
+      onDelete: "RESTRICT",
+    });
   };
   return Question;
 };
-

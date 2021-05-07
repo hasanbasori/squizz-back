@@ -19,6 +19,15 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "RESTRICT",
       onDelete: "RESTRICT",
     });
+
+    // many Collection to one Creator
+    Collection.belongsTo(models.Creator, {
+      foreignKey: {
+        name: "creator_id",
+      },
+      onUpdate: "RESTRICT",
+      onDelete: "RESTRICT",
+    });
   };
   return Collection;
 };
