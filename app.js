@@ -8,6 +8,8 @@ const CreatorRoute = require("./routes/CreatorRoute");
 const QuestionRoute = require("./routes/QuestionRoute");
 const QuizRoute = require("./routes/QuizRoute");
 const UserRoute = require("./routes/UserRoute");
+const UserHistory = require("./routes/UserHistoryRoute");
+const PointRecord = require("./routes/PointRecordRoute");
 
 // const { sequelize } = require('./models')
 
@@ -20,6 +22,8 @@ app.use("/creator", CreatorRoute);
 app.use("/question", QuestionRoute);
 app.use("/quiz", QuizRoute);
 app.use("/user", UserRoute);
+app.use("/userhistory", UserHistory);
+app.use("/pointrecord", PointRecord);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "path not found on this server" });
