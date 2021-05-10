@@ -3,8 +3,8 @@ const QuestionControllers = require("../controllers/QuestionControllers");
 
 const router = express.Router();
 
-router.get("/", QuestionControllers.getQuestion);
-router.post("/create", QuestionControllers.createQuestion);
+router.get("/:id", QuestionControllers.getQuestion);
+router.post("/create/:id", QuestionControllers.createQuestion);
 router.put("/:id", QuestionControllers.updateQuestion);
 router.delete("/:id", QuestionControllers.deleteQuestion);
 

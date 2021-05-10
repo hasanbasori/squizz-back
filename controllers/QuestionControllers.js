@@ -7,7 +7,7 @@ exports.getQuestion = async (req, res, next) => {
   try {
     const { id } = req.params;
     const questions = await Question.findAll({
-      where: { id },
+      where: { quiz_id: id },
       order: [["createdAt", "desc"]],
       attributes: [
         "title",
@@ -21,6 +21,7 @@ exports.getQuestion = async (req, res, next) => {
         "option_4",
         "question_img",
         "answer",
+        "quiz_id",
       ],
     });
 
@@ -33,6 +34,7 @@ exports.getQuestion = async (req, res, next) => {
 // create questions
 exports.createQuestion = async (req, res, next) => {
   try {
+    const { id } = req.params;
     const {
       title,
       type,
@@ -59,6 +61,7 @@ exports.createQuestion = async (req, res, next) => {
       option_4,
       question_img,
       answer,
+      quiz_id: id,
     });
 
     res.status(200).json({ question });
@@ -116,7 +119,7 @@ exports.deleteQuestion = async (req, res, next) => {
     });
     if (!question) return res.status(400).json({ message: "Unfound Question" });
 
-    await question.destryo();
+    await question.destroy();
     res.status(204).json({ message: "Succesfully Deleted" });
   } catch (err) {
     next(err);

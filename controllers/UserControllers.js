@@ -1,12 +1,13 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { User } = require("../models");
 
 // get
 exports.getUser = async (req, res, next) => {
   try {
-    const { user } = req.body;
-    const name = User.findOne({
-      where: { user },
+    const { id } = req.params;
+    const name = await User.findOne({
+      where: { id }
     });
     res.status(200).json({ name });
   } catch (err) {
@@ -21,7 +22,6 @@ exports.createUser = async (req, res, next) => {
     const user = await User.create({
       name,
       score: 0,
-      creator_id: req.creator.id,
     });
 
     res.status(200).json({ message: "Successfully Name Created" });
