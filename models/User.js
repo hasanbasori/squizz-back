@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = (models) => {
     User.hasMany(models.UserHistory, {
       foreignKey: {
-        name: "user_history_id",
+        name: "user_id",
         allowNull: false,
       },
       onUpdate: "RESTRICT",

@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const UserHistory = sequelize.define("UserHistory", {
     total_user_points: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       defaultValue: 0,
     },
   });
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     // many UserHistory to one User
     UserHistory.belongsTo(models.User, {
       foreignKey: {
-        name: "user_history_id",
+        name: "user_id",
         allowNull: false,
       },
       onUpdate: "RESTRICT",

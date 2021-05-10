@@ -1,12 +1,10 @@
 const express = require("express");
-const QuestionControllers = require("../controllers/QuestionControllers");
-const { route } = require("./UserHistoryRoute");
+const PointRecordControllers = require("../controllers/PointRecordControllers");
 
 const router = express.Router();
 
-router.get("/",);
-router.get("/:id",);
-router.post("/create",);
-router.put("/:id",);
+router.get("/:id", PointRecordControllers.getPointRecord);
+router.post("/create", PointRecordControllers.createPointRecord);
+router.put("/:id", PointRecordControllers.updatePointRecord);
 
 module.exports = router;

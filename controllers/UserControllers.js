@@ -1,13 +1,13 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models");
+const { User, UserHistory } = require("../models");
 
 // get
 exports.getUser = async (req, res, next) => {
   try {
     const { id } = req.params;
     const name = await User.findOne({
-      where: { id }
+      where: { id },
     });
     res.status(200).json({ name });
   } catch (err) {
@@ -18,10 +18,19 @@ exports.getUser = async (req, res, next) => {
 // name users
 exports.createUser = async (req, res, next) => {
   try {
+    // create two tables at the same time
     const { name } = req.body;
     const user = await User.create({
       name,
       score: 0,
+    });
+
+    const { id } = req.params;
+    // after creating user and get id, we create total_user_points and user_id in the UserHistory as well
+    const userHistory = await UserHistory.create({
+      total_user_points: 0,
+      user_id: user.id,
+      quiz_id: id,
     });
 
     res.status(200).json({ message: "Successfully Name Created" });

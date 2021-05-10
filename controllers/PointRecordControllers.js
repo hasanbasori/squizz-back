@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 
 // getAllPointRecord
-exports.getAllUserHistory = async (req, res, next) => {
+exports.getPointRecord = async (req, res, next) => {
   try {
     const pointRecord = await PointRecord.findAll({
       where: { id },
