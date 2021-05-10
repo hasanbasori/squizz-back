@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
     link: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
   });
 
@@ -39,7 +39,15 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
     });
 
-    // one quiz to many QuizHistory
+    // one quiz to many UserHistory
+    Quiz.hasMany(models.UserHistory, {
+      foreignKey: {
+        name: "quiz_id",
+        allowNull: false,
+      },
+      onUpdate: "RESTRICT",
+      onDelete: "RESTRICT",
+    });
   };
   return Quiz;
 };

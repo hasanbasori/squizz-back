@@ -15,11 +15,12 @@ exports.getQuestion = async (req, res, next) => {
         "points",
         "time_limit",
         "answer_options",
-        "answer_1",
-        "answer_2",
-        "answer_3",
-        "answer_4",
+        "option_1",
+        "option_2",
+        "option_3",
+        "option_4",
         "question_img",
+        "answer",
       ],
     });
 
@@ -38,11 +39,12 @@ exports.createQuestion = async (req, res, next) => {
       points,
       time_limit,
       answer_options,
-      answer_1,
-      answer_2,
-      answer_3,
-      answer_4,
+      option_1,
+      option_2,
+      option_3,
+      option_4,
       question_img,
+      answer,
     } = req.body;
 
     const question = await Question.create({
@@ -51,11 +53,12 @@ exports.createQuestion = async (req, res, next) => {
       points,
       time_limit,
       answer_options,
-      answer_1,
-      answer_2,
-      answer_3,
-      answer_4,
+      option_1,
+      option_2,
+      option_3,
+      option_4,
       question_img,
+      answer,
     });
 
     res.status(200).json({ question });
@@ -74,11 +77,12 @@ exports.updateQuestion = async (req, res, next) => {
       points,
       time_limit,
       answer_options,
-      answer_1,
-      answer_2,
-      answer_3,
-      answer_4,
+      option_1,
+      option_2,
+      option_3,
+      option_4,
       question_img,
+      answer,
     } = req.body;
 
     await Question.update(
@@ -88,11 +92,12 @@ exports.updateQuestion = async (req, res, next) => {
         points,
         time_limit,
         answer_options,
-        answer_1,
-        answer_2,
-        answer_3,
-        answer_4,
+        option_1,
+        option_2,
+        option_3,
+        option_4,
         question_img,
+        answer,
       },
       { where: { id } }
     );

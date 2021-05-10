@@ -19,6 +19,8 @@ exports.protectCreator = async (req, res, next) => {
         .json({ message: "You're not yet the Squizz creator!." });
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(payload)
+
     const creator = await Creator.findOne({ where: { id: payload.id } });
     req.creator = creator;
     next();
@@ -59,7 +61,8 @@ exports.registerCreator = async (req, res, next) => {
       role,
     });
 
-    const payload = { username, email, profile_img, role };
+    // set id in the payload as well to be able to get id when log
+    const payload = { id: creator.id, username, email, profile_img, role };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: +process.env.JWT_EXPIRES_IN,
     });
