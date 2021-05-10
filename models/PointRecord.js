@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const PointRecord = sequelize.define("PointRecord", {
     user_answer: {
-      name: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING,
+      allowNull: false
     },
     points: {
-      name: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       defaultValue: 0,
     },
   });
@@ -31,4 +31,5 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
     });
   };
+  return PointRecord
 };

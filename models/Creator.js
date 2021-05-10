@@ -30,17 +30,17 @@ module.exports = (sequelize, DataTypes) => {
   Creator.associate = (models) => {
     Creator.hasMany(models.Collection, {
       foreignKey: {
-        name: "collection_id",
+        name: "creator_id",
         allowNull: false,
       },
       onUpdate: "RESTRICT",
-      onDelete: "RESTRICT,",
+      onDelete: "RESTRICT",
     });
 
     // one Creator to many Quiz
     Creator.hasMany(models.Quiz, {
       foreignKey: {
-        name: "quiz_id",
+        name: "creator_id",
         allowNull: false,
       },
       onUpdate: "RESTRICT",

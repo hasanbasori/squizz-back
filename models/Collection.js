@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  // one Collection to many Quiz
+  //one Collection to many Quiz
   Collection.associate = (models) => {
     Collection.hasMany(models.Quiz, {
       foreignKey: {

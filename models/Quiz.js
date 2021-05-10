@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
     link: {
-      type: Datatypes.INTEGER,
+      type: DataTypes.INTEGER,
     },
   });
 
