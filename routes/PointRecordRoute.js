@@ -3,7 +3,7 @@ const PointRecordControllers = require("../controllers/PointRecordControllers");
 
 const router = express.Router();
 
-router.get("/:id", PointRecordControllers.getPointRecord);
+router.get("/", PointRecordControllers.getAllPointRecord);
 router.post("/create", PointRecordControllers.createPointRecord);
 router.put("/:id", PointRecordControllers.updatePointRecord);
 
