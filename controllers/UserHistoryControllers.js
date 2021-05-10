@@ -37,7 +37,7 @@ exports.getUserHistory = async (req, res, next) => {
 exports.updateUserHistory = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { total_user_points } = req.body;
+    const { new_user_points } = req.body;
 
     const old_total_user_points = await UserHistory.findOne({
       where: { id },
@@ -47,7 +47,7 @@ exports.updateUserHistory = async (req, res, next) => {
     await UserHistory.update(
       {
         total_user_points:
-          old_total_user_points.total_user_points + total_user_points,
+          old_total_user_points.total_user_points + new_user_points,
       },
       { where: { id } }
     );
