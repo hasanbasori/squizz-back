@@ -19,7 +19,7 @@ exports.getAllPointRecord = async (req, res, next) => {
 exports.createPointRecord = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { user_answer } = req.body;
+    const { user_answer, points } = req.body;
 
     // Find "answer" in the Question
     const answer = await Question.findOne({
@@ -29,13 +29,12 @@ exports.createPointRecord = async (req, res, next) => {
 
     // Validate as if the answer from Question is equal to User answer
     if ((answer = user_answer)) {
-      res.status(200).json({ message: "Your Answer is Correct!." });
+      // add point to users whome answer correctly
+      const new_user_points = points;
+      res.status(200).json({ new_user_points });
     } else {
+      res.status(200).json({ message: "Try Again! Next Question" });
     }
-
-    // add point to users whome answer correctly
-
-    res.status(200).json({ pointRecord });
   } catch (err) {
     next(err);
   }
