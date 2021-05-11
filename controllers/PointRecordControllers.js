@@ -15,7 +15,7 @@ exports.getAllPointRecord = async (req, res, next) => {
   }
 };
 
-// createPointRecord
+// updatePointRecord
 exports.createPointRecord = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -31,24 +31,14 @@ exports.createPointRecord = async (req, res, next) => {
     if ((answer = user_answer)) {
       // add point to users whome answer correctly
       const new_user_points = points;
-      res.status(200).json({ new_user_points });
+      const newPoint = await UserHistory.update({
+        total_user_points: total_user_points + new_user_points,
+        where: { user_history_id: id },
+      });
+      res.status(200).json({ newPoint });
     } else {
       res.status(200).json({ message: "Try Again! Next Question" });
     }
-  } catch (err) {
-    next(err);
-  }
-};
-
-// updatePointRecord
-exports.updatePointRecord = async (req, res, next) => {
-  try {
-    const { user_answer, point } = req.body;
-
-    const pointRecord = await PointRecord.update({
-      user_answer,
-      point,
-    });
   } catch (err) {
     next(err);
   }
