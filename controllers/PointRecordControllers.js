@@ -16,7 +16,7 @@ exports.getAllPointRecord = async (req, res, next) => {
 };
 
 // updatePointRecord
-exports.createPointRecord = async (req, res, next) => {
+exports.updatePointRecord = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { user_answer, points } = req.body;
