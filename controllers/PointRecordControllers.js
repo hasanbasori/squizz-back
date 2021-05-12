@@ -28,7 +28,7 @@ exports.updatePointRecord = async (req, res, next) => {
     });
 
     // Validate as if the answer from Question is equal to User answer
-    if ((answer = user_answer)) {
+    if ((answer === user_answer)) {
       // add point to users whome answer correctly
       const new_user_points = points;
       const newPoint = await UserHistory.update({

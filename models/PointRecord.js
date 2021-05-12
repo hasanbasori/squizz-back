@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const PointRecord = sequelize.define("PointRecord", {
-    user_answer: {
+    userAnswer: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -8,13 +8,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+  },
+  {
+    underscored: true,
   });
 
   PointRecord.associate = (models) => {
     // many PointRecord to one Question
     PointRecord.belongsTo(models.Question, {
       foreignKey: {
-        name: "quesiton_id",
+        name: "quesitonId",
         allowNull: false,
       },
       onUpdate: "RESTRICT",
@@ -24,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     // many PointRecord to one UserHistory
     PointRecord.belongsTo(models.UserHistory, {
       foreignKey: {
-        name: "user_history_id",
+        name: "userHistoryId",
         allowNull: false,
       },
       onUpdate: "RESTRICT",

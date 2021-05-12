@@ -1,19 +1,25 @@
 module.exports = (sequelize, DataTypes) => {
-  const Collection = sequelize.define("Collection", {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+  const Collection = sequelize.define(
+    "Collection",
+    {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING,
+      },
     },
-    description: {
-      type: DataTypes.STRING,
-    },
-  });
+    {
+      underscored: true,
+    }
+  );
 
   //one Collection to many Quiz
   Collection.associate = (models) => {
     Collection.hasMany(models.Quiz, {
       foreignKey: {
-        name: "collection_id",
+        name: "collectionId",
         allowNull: false,
       },
       onUpdate: "RESTRICT",
@@ -23,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     // many Collection to one Creator
     Collection.belongsTo(models.Creator, {
       foreignKey: {
-        name: "creator_id",
+        name: "creatorId",
       },
       onUpdate: "RESTRICT",
       onDelete: "RESTRICT",
