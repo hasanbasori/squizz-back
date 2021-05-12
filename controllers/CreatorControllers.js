@@ -19,7 +19,7 @@ exports.protectCreator = async (req, res, next) => {
         .json({ message: "You're not yet the Squizz creator!." });
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(payload)
+    console.log(payload);
 
     const creator = await Creator.findOne({ where: { id: payload.id } });
     req.creator = creator;
@@ -45,7 +45,42 @@ exports.myInfo = async (req, res, next) => {
 // register
 exports.registerCreator = async (req, res, next) => {
   try {
-    const { name, username, email, profile_img, password, role } = req.body;
+    const {
+      name,
+      username,
+      email,
+      profile_img,
+      password,
+      confirmPassword,
+      role,
+    } = req.body;
+
+    if (!name) return res.status(400).json({ message: "name is required" });
+    if (!email) return res.status(400).json({ message: "email is required" });
+    if (!username)
+      return res.status(400).json({ message: "username is required" });
+    if (!password)
+      return res.status(400).json({ message: "password is required" });
+    if (!confirmPassword)
+      return res.status(400).json({ message: "confirm password is required" });
+
+    if (!username.match(/^[0-9a-zA-Z]+$/))
+      return res
+        .status(400)
+        .json({ message: "username can not be alphanumeric" });
+    if (!password.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/))
+      return res.status(400).json({
+        message:
+          "The number of password must be between 8 and 16 characters and must have Capital letters",
+      });
+    if (password !== confirmPassword)
+      return res.status(400).json({ message: "password is not match" });
+    const validateEmail = await Creator.findOne({ where: { email } });
+    if (validateEmail)
+      return res.status(400).json({ message: "email is exist" });
+    const validateUsername = await Creator.findOne({ where: { username } });
+    if (validateUsername)
+      return res.status(400).json({ message: "username is exist" });
 
     const hashedPassword = await bcrypt.hash(
       password,
@@ -82,11 +117,11 @@ exports.loginCreator = async (req, res, next) => {
     if (!creator)
       return res
         .status(400)
-        .json({ message: "This username is not in the Squizz system yet!." });
+        .json({ message: "username, email or password incorrect!" });
 
     const isMatch = await bcrypt.compare(password, creator.password);
     if (!isMatch)
-      return res.status(400).json({ message: "Incorrect Password!" });
+      return res.status(400).json({ message: "username, email or password incorrect!" });
 
     const payload = {
       id: creator.id,
@@ -127,7 +162,7 @@ exports.updateCreator = async (req, res, next) => {
         password: hashedPassword,
         role,
       },
-      { where: {id} }
+      { where: { id } }
     );
 
     res.status(200).json({ message: "Successfully Creator's Info Updated!." });
