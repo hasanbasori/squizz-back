@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 const { Question } = require("../models");
 
 // get all questions
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.getQuestion = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -32,6 +35,9 @@ exports.getQuestion = async (req, res, next) => {
 };
 
 // create questions
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.createQuestion = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -71,6 +77,9 @@ exports.createQuestion = async (req, res, next) => {
 };
 
 // update questions
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.updateQuestion = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -111,6 +120,9 @@ exports.updateQuestion = async (req, res, next) => {
 };
 
 // delete questions
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.deleteQuestion = async (req, res, next) => {
   try {
     const { id } = req.params;
