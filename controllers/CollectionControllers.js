@@ -17,11 +17,13 @@ exports.getAllCollection = async (req, res, next) => {
 
 exports.createCollection = async (req, res, next) => {
   try {
+    const { id } = req.creator
     const { name, description } = req.body;
 
     await Collection.create({
       name,
       description,
+      creatorId: id
     });
 
     res.status(200).json({ message: "Collection Successfully Created!" });

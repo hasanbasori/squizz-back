@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { Quiz } = require("../models");
+const { Quiz, Question } = require("../models");
 
 // get quiz
 exports.getQuiz = async (req, res, next) => {
@@ -8,8 +8,23 @@ exports.getQuiz = async (req, res, next) => {
     // get method cannot use req.body and text inside currey blanket must be the same as path on the route (router.get("/:id", QuizControllers.getQuiz);)
     const { id } = req.params;
 
-    const quiz = await Quiz.findAll({ where: { collection_id: id } });
-    res.status(200).json({ quiz });
+    const quiz = await Quiz.findAll({
+      where: { creator_id: id },
+      order: [["createdAt", "desc"]],
+    });
+
+    const countQuiz = await Quiz.findAndCountAll({
+      where: { creator_id: id },
+    });
+
+    const countQuestion = await Quiz.findAndCountAll({
+      where: { creator_id: id },
+      include: {
+        model: Question,
+      },
+    })
+
+    res.status(200).json({ quiz, countQuiz, countQuestion });
   } catch (err) {
     next(err);
   }
@@ -18,7 +33,7 @@ exports.getQuiz = async (req, res, next) => {
 // generate pin
 exports.createQuiz = async (req, res, next) => {
   try {
-    const { collection_id, creator_id } = req.body;
+    const { collectionId, creatorId, name } = req.body;
     const pin = Math.floor(Math.random() * 10000000);
 
     //generate path
@@ -39,11 +54,12 @@ exports.createQuiz = async (req, res, next) => {
 
     // create data in SQL of Quiz
     const quiz = await Quiz.create({
+      name,
       pin,
       link,
       // need to create id in the SQL as well which can be fetched data from req.body or req.params
-      collection_id: collection_id,
-      creator_id: creator_id,
+      collectionId: collectionId,
+      creatorId: creatorId,
     });
 
     res.status(200).json({ quiz });

@@ -32,10 +32,28 @@ exports.protectCreator = async (req, res, next) => {
 // get
 exports.myInfo = async (req, res, next) => {
   try {
-    const { name, username, email, profile_img, password, role } = req.creator;
+    const {
+      id,
+      name,
+      username,
+      email,
+      profile_img,
+      password,
+      role,
+      createdAt,
+    } = req.creator;
 
     res.status(200).json({
-      Creators: { name, username, email, profile_img, password, role },
+      creators: {
+        id,
+        name,
+        username,
+        email,
+        profile_img,
+        password,
+        role,
+        createdAt,
+      },
     });
   } catch (err) {
     next(err);
@@ -49,7 +67,7 @@ exports.registerCreator = async (req, res, next) => {
       name,
       username,
       email,
-      profile_img,
+      profileImg,
       password,
       confirmPassword,
       role,
@@ -91,13 +109,21 @@ exports.registerCreator = async (req, res, next) => {
       name,
       username,
       email,
-      profile_img,
+      profileImg,
       password: hashedPassword,
       role,
     });
 
     // set id in the payload as well to be able to get id when log
-    const payload = { id: creator.id, username, email, profile_img, role };
+    const payload = {
+      id: creator.id,
+      name,
+      username,
+      email,
+      profileImg,
+      role,
+      createdAt: creator.createdAt,
+    };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: +process.env.JWT_EXPIRES_IN,
     });
@@ -121,7 +147,9 @@ exports.loginCreator = async (req, res, next) => {
 
     const isMatch = await bcrypt.compare(password, creator.password);
     if (!isMatch)
-      return res.status(400).json({ message: "username, email or password incorrect!" });
+      return res
+        .status(400)
+        .json({ message: "username, email or password incorrect!" });
 
     const payload = {
       id: creator.id,
@@ -130,6 +158,7 @@ exports.loginCreator = async (req, res, next) => {
       email: creator.email,
       profile_img: creator.profile_img,
       role: creator.role,
+      createdAt: creator.createdAt,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {

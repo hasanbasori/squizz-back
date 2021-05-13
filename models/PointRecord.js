@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     // many PointRecord to one Question
     PointRecord.belongsTo(models.Question, {
       foreignKey: {
-        name: "quesitonId",
+        name: "questionId",
         allowNull: false,
       },
       onUpdate: "RESTRICT",
