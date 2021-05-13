@@ -7,7 +7,7 @@ exports.getAllPointRecord = async (req, res, next) => {
   try {
     const pointRecord = await PointRecord.findAll({
       order: [["createdAt", "desc"]],
-      attributes: ["user_answer", "point"],
+      attributes: ["userAnswer", "point"],
     });
     res.status(200).json({ pointRecord });
   } catch (err) {
@@ -19,21 +19,21 @@ exports.getAllPointRecord = async (req, res, next) => {
 exports.updatePointRecord = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { user_answer, points } = req.body;
+    const { userAnswer, points } = req.body;
 
     // Find "answer" in the Question
     const answer = await Question.findOne({
-      where: { question_id: id },
+      where: { questionId: id },
       attributes: ["answer"],
     });
 
     // Validate as if the answer from Question is equal to User answer
-    if ((answer === user_answer)) {
+    if ((answer === userAnswer)) {
       // add point to users whome answer correctly
-      const new_user_points = points;
+      const newUserPoints = points;
       const newPoint = await UserHistory.update({
-        total_user_points: total_user_points + new_user_points,
-        where: { user_history_id: id },
+        totalUserPoints: totalUserPoints + newUserPoints,
+        where: { userHistoryId: id },
       });
       res.status(200).json({ newPoint });
     } else {

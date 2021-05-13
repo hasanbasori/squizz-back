@@ -9,16 +9,16 @@ exports.getQuiz = async (req, res, next) => {
     const { id } = req.params;
 
     const quiz = await Quiz.findAll({
-      where: { creator_id: id },
+      where: { creatorId: id },
       order: [["createdAt", "desc"]],
     });
 
     const countQuiz = await Quiz.findAndCountAll({
-      where: { creator_id: id },
+      where: { creatorId: id },
     });
 
     const countQuestion = await Quiz.findAndCountAll({
-      where: { creator_id: id },
+      where: { creatorId: id },
       include: {
         model: Question,
       },

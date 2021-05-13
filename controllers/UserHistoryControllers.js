@@ -6,15 +6,15 @@ const { UserHistory, User } = require("../models");
 exports.getAllUserHistory = async (req, res, next) => {
   try {
     const { id } = req.params; // quiz_id
-    const total_user_points = await UserHistory.findAll({
+    const totalUserPoints = await UserHistory.findAll({
       where: { quiz_id: id },
-      order: [["total_user_points", "desc"]], // อ้นดับเป็น array
+      order: [["totalUserPoints", "desc"]], // อ้นดับเป็น array
 
       // include data from a column of "name' in the User table
       includes: { models: User, attributes: ["name"] },
     });
 
-    res.status(200).json({ total_user_points });
+    res.status(200).json({ totalUserPoints });
   } catch (err) {
     next(err);
   }
@@ -24,10 +24,10 @@ exports.getAllUserHistory = async (req, res, next) => {
 exports.getUserHistory = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const total_user_points = await UserHistory.findOne({
+    const totalUserPoints = await UserHistory.findOne({
       where: { id },
     });
-    res.status(200).json({ total_user_points });
+    res.status(200).json({ totalUserPoints });
   } catch (err) {
     next(err);
   }
@@ -37,17 +37,17 @@ exports.getUserHistory = async (req, res, next) => {
 exports.updateUserHistory = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { new_user_points } = req.body;
+    const { newUserPoints } = req.body;
 
-    const old_total_user_points = await UserHistory.findOne({
+    const oldTotalUserPoints = await UserHistory.findOne({
       where: { id },
-      attributes: ["total_user_points"],
+      attributes: ["totalUserPoints"],
     });
 
     await UserHistory.update(
       {
-        total_user_points:
-          old_total_user_points.total_user_points + new_user_points,
+        totalUserPoints:
+          oldTotalUserPoints.totalUserPoints + newUserPoints,
       },
       { where: { id } }
     );

@@ -28,9 +28,9 @@ exports.createUser = async (req, res, next) => {
     const { id } = req.params;
     // after creating user and get id, we create total_user_points and user_id in the UserHistory as well
     const userHistory = await UserHistory.create({
-      total_user_points: 0,
-      user_id: user.id,
-      quiz_id: id,
+      totalUserPoints: 0,
+      userId: user.id,
+      quizId: id,
     });
 
     res.status(200).json({ message: "Successfully Name Created" });

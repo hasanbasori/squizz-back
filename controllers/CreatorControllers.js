@@ -37,7 +37,7 @@ exports.myInfo = async (req, res, next) => {
       name,
       username,
       email,
-      profile_img,
+      profileImg,
       password,
       role,
       createdAt,
@@ -49,7 +49,7 @@ exports.myInfo = async (req, res, next) => {
         name,
         username,
         email,
-        profile_img,
+        profileImg,
         password,
         role,
         createdAt,
@@ -156,7 +156,7 @@ exports.loginCreator = async (req, res, next) => {
       name: creator.name,
       username: creator.username,
       email: creator.email,
-      profile_img: creator.profile_img,
+      profileImg: creator.profile_img,
       role: creator.role,
       createdAt: creator.createdAt,
     };
@@ -174,7 +174,7 @@ exports.loginCreator = async (req, res, next) => {
 // update
 exports.updateCreator = async (req, res, next) => {
   try {
-    const { name, username, email, profile_img, password, role } = req.body;
+    const { name, username, email, profileImg, password, role } = req.body;
     const { id } = req.params;
 
     const hashedPassword = await bcrypt.hash(
@@ -187,7 +187,7 @@ exports.updateCreator = async (req, res, next) => {
         name,
         username,
         email,
-        profile_img,
+        profileImg,
         password: hashedPassword,
         role,
       },
