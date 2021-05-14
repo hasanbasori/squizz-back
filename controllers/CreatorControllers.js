@@ -38,16 +38,8 @@ exports.protectCreator = async (req, res, next) => {
  */
 exports.myInfo = async (req, res, next) => {
   try {
-    const {
-      id,
-      name,
-      username,
-      email,
-      profileImg,
-      password,
-      role,
-      createdAt,
-    } = req.creator;
+    const { id, name, username, email, profileImg, password, role, createdAt } =
+      req.creator;
 
     res.status(200).json({
       creators: {
@@ -72,21 +64,14 @@ exports.myInfo = async (req, res, next) => {
  */
 exports.registerCreator = async (req, res, next) => {
   try {
-    const {
-      name,
-      username,
-      email,
-      profileImg,
-      password,
-      birthdate,
-      role,
-    } = req.body;
+    const { name, username, email, profileImg, password, birthdate, role } =
+      req.body;
 
     if (!name) return res.status(400).json({ message: "name is required" });
     if (!email) return res.status(400).json({ message: "email is required" });
     if (!username)
       return res.status(400).json({ message: "username is required" });
-      if (!birthdate)
+    if (!birthdate)
       return res.status(400).json({ message: "birthdate is required" });
     if (!password)
       return res.status(400).json({ message: "password is required" });
@@ -123,7 +108,7 @@ exports.registerCreator = async (req, res, next) => {
       profileImg,
       birthdate,
       password: hashedPassword,
-      role: role ? role : 'PERSONAL',
+      role: role ? role : "PERSONAL",
     });
 
     // set id in the payload as well to be able to get id when log
@@ -172,12 +157,13 @@ exports.loginCreator = async (req, res, next) => {
       name: creator.name,
       username: creator.username,
       email: creator.email,
-      profileImg: creator.profile_img,
+      profileImg: creator.profileImg,
+      birthdate: creator.birthdate,
       role: creator.role,
       createdAt: creator.createdAt,
     };
 
-    console.log(payload)
+    console.log(payload);
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: +process.env.JWT_EXPIRES_IN,
