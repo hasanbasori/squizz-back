@@ -119,7 +119,7 @@ exports.registerCreator = async (req, res, next) => {
       email,
       profileImg,
       password: hashedPassword,
-      role,
+      role: role ? role : 'PERSONAL',
     });
 
     // set id in the payload as well to be able to get id when log
