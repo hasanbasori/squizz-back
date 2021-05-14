@@ -1,6 +1,8 @@
 require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
+const server = require('http').createServer();
+const io = require("socket.io")(server)
 const app = express();
 const errorMiddleware = require("./middlewares/error");
 const CollectionRoute = require("./routes/CollectionRoute");
@@ -35,3 +37,9 @@ app.use(errorMiddleware);
 
 const port = process.env.PORT;
 app.listen(port, () => console.log(`server is running on port ${port}`));
+
+// io.on('connection', client => {
+//   client.on('event', data => { /* … */ });
+//   client.on('disconnect', () => { /* … */ });
+// });
+// server.listen(3000);

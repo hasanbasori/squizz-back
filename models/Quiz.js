@@ -33,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
     Quiz.belongsTo(models.Collection, {
       foreignKey: {
         name: "collectionId",
-        allowNull: false,
       },
       onUpdate: "RESTRICT",
       onDelete: "RESTRICT",

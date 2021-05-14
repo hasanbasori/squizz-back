@@ -69,7 +69,6 @@ exports.registerCreator = async (req, res, next) => {
       email,
       profileImg,
       password,
-      confirmPassword,
       role,
     } = req.body;
 
@@ -79,8 +78,8 @@ exports.registerCreator = async (req, res, next) => {
       return res.status(400).json({ message: "username is required" });
     if (!password)
       return res.status(400).json({ message: "password is required" });
-    if (!confirmPassword)
-      return res.status(400).json({ message: "confirm password is required" });
+    // if (!confirmPassword)
+    //   return res.status(400).json({ message: "confirm password is required" });
 
     if (!username.match(/^[0-9a-zA-Z]+$/))
       return res
@@ -91,8 +90,8 @@ exports.registerCreator = async (req, res, next) => {
         message:
           "The number of password must be between 8 and 16 characters and must have Capital letters",
       });
-    if (password !== confirmPassword)
-      return res.status(400).json({ message: "password is not match" });
+    // if (password !== confirmPassword)
+    //   return res.status(400).json({ message: "password is not match" });
     const validateEmail = await Creator.findOne({ where: { email } });
     if (validateEmail)
       return res.status(400).json({ message: "email is exist" });
@@ -160,6 +159,8 @@ exports.loginCreator = async (req, res, next) => {
       role: creator.role,
       createdAt: creator.createdAt,
     };
+
+    console.log(payload)
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: +process.env.JWT_EXPIRES_IN,

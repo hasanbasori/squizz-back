@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     Collection.hasMany(models.Quiz, {
       foreignKey: {
         name: "collectionId",
-        allowNull: false,
       },
       onUpdate: "RESTRICT",
       onDelete: "RESTRICT",
