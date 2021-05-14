@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       birthdate: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       profileImg: {
