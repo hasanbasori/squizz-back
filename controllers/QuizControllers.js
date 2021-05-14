@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 const { Quiz, Question, Creator } = require("../models");
 
 // get quiz
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.getQuiz = async (req, res, next) => {
   try {
     // get method cannot use req.body and text inside currey blanket must be the same as path on the route (router.get("/:id", QuizControllers.getQuiz);)
@@ -18,9 +21,18 @@ exports.getQuiz = async (req, res, next) => {
       where: { creatorId },
     });
 
+<<<<<<< HEAD
     const countQuestion = await Question.findAndCountAll({
       where: { quizId : quiz[0].id }
     })
+=======
+    const countQuestion = await Quiz.findAndCountAll({
+      where: { creatorId: id },
+      include: {
+        model: Question,
+      },
+    });
+>>>>>>> origin/Backend/SetUp
 
     res.status(200).json({ quiz, countQuiz, countQuestion });
   } catch (err) {
@@ -29,6 +41,9 @@ exports.getQuiz = async (req, res, next) => {
 };
 
 // generate pin
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.createQuiz = async (req, res, next) => {
   try {
     const { id } = req.creator

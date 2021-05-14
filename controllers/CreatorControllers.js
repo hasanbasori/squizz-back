@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 const { Creator } = require("../models");
 
 // protect
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.protectCreator = async (req, res, next) => {
   try {
     let token = null;
@@ -30,6 +33,9 @@ exports.protectCreator = async (req, res, next) => {
 };
 
 // get
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.myInfo = async (req, res, next) => {
   try {
     const {
@@ -61,6 +67,9 @@ exports.myInfo = async (req, res, next) => {
 };
 
 // register
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.registerCreator = async (req, res, next) => {
   try {
     const {
@@ -134,6 +143,9 @@ exports.registerCreator = async (req, res, next) => {
 };
 
 // login
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.loginCreator = async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -173,6 +185,9 @@ exports.loginCreator = async (req, res, next) => {
 };
 
 // update
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.updateCreator = async (req, res, next) => {
   try {
     const { name, username, email, profileImg, password, role } = req.body;
@@ -202,6 +217,9 @@ exports.updateCreator = async (req, res, next) => {
 };
 
 // delete
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.deleteCreator = async (req, res, next) => {
   try {
     const { id } = req.params;

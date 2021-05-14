@@ -2,6 +2,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { Collection } = require("../models");
 
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.getAllCollection = async (req, res, next) => {
   try {
     const allCollection = await Collection.findAll({
@@ -15,6 +18,9 @@ exports.getAllCollection = async (req, res, next) => {
   }
 };
 
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.createCollection = async (req, res, next) => {
   try {
     const { id } = req.creator
@@ -32,6 +38,9 @@ exports.createCollection = async (req, res, next) => {
   }
 };
 
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.updateCollection = async (req, res, next) => {
   try {
     const { name, description } = req.body;
@@ -44,6 +53,9 @@ exports.updateCollection = async (req, res, next) => {
   }
 };
 
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.deleteCollection = async (req, res, next) => {
   try {
     const { id } = req.params;

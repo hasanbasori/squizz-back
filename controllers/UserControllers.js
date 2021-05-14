@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 const { User, UserHistory } = require("../models");
 
 // get
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.getUser = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -16,6 +19,9 @@ exports.getUser = async (req, res, next) => {
 };
 
 // name users
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.createUser = async (req, res, next) => {
   try {
     // create two tables at the same time
@@ -40,6 +46,9 @@ exports.createUser = async (req, res, next) => {
 };
 
 //update users
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.updateUser = async (req, res, next) => {
   try {
     const { id } = req.params;

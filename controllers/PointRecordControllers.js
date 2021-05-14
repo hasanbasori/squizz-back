@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 const { PointRecord, UserHistory } = require("../models");
 
 // getAllPointRecord
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.getAllPointRecord = async (req, res, next) => {
   try {
     const pointRecord = await PointRecord.findAll({
@@ -16,6 +19,9 @@ exports.getAllPointRecord = async (req, res, next) => {
 };
 
 // updatePointRecord
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.updatePointRecord = async (req, res, next) => {
   try {
     const { id } = req.params;

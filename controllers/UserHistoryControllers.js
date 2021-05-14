@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 const { UserHistory, User } = require("../models");
 
 //getAllUserHistory
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.getAllUserHistory = async (req, res, next) => {
   try {
     const { id } = req.params; // quiz_id
@@ -21,6 +24,9 @@ exports.getAllUserHistory = async (req, res, next) => {
 };
 
 //getUserHistory
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.getUserHistory = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -34,6 +40,9 @@ exports.getUserHistory = async (req, res, next) => {
 };
 
 //updateUserHistory
+/**
+ * @type {import('express').RequestHandler}
+ */
 exports.updateUserHistory = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -46,8 +55,7 @@ exports.updateUserHistory = async (req, res, next) => {
 
     await UserHistory.update(
       {
-        totalUserPoints:
-          oldTotalUserPoints.totalUserPoints + newUserPoints,
+        totalUserPoints: oldTotalUserPoints.totalUserPoints + newUserPoints,
       },
       { where: { id } }
     );
