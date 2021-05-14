@@ -78,6 +78,7 @@ exports.registerCreator = async (req, res, next) => {
       email,
       profileImg,
       password,
+      birthdate,
       role,
     } = req.body;
 
@@ -85,6 +86,8 @@ exports.registerCreator = async (req, res, next) => {
     if (!email) return res.status(400).json({ message: "email is required" });
     if (!username)
       return res.status(400).json({ message: "username is required" });
+      if (!birthdate)
+      return res.status(400).json({ message: "birthdate is required" });
     if (!password)
       return res.status(400).json({ message: "password is required" });
     // if (!confirmPassword)
@@ -118,6 +121,7 @@ exports.registerCreator = async (req, res, next) => {
       username,
       email,
       profileImg,
+      birthdate,
       password: hashedPassword,
       role: role ? role : 'PERSONAL',
     });
@@ -129,6 +133,7 @@ exports.registerCreator = async (req, res, next) => {
       username,
       email,
       profileImg,
+      birthdate,
       role,
       createdAt: creator.createdAt,
     };
