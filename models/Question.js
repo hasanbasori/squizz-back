@@ -53,8 +53,8 @@ module.exports = (sequelize, DataTypes) => {
         name: "quizId",
         allowNull: false,
       },
-      onUpdate: "RESTRICT",
-      onDelete: "RESTRICT",
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     });
 
     // one Question to many PointRecord

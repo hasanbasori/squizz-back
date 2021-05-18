@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { Creator } = require("../models");
+const { Op } = require("sequelize");
 
 // protect
 /**
@@ -64,10 +65,8 @@ exports.myInfo = async (req, res, next) => {
  */
 exports.registerCreator = async (req, res, next) => {
   try {
-    const { name, username, email, profileImg, password, birthdate, role } =
-      req.body;
+    const { username, email, profileImg, password, birthdate, role } = req.body;
 
-    if (!name) return res.status(400).json({ message: "name is required" });
     if (!email) return res.status(400).json({ message: "email is required" });
     if (!username)
       return res.status(400).json({ message: "username is required" });
@@ -102,7 +101,6 @@ exports.registerCreator = async (req, res, next) => {
     );
 
     const creator = await Creator.create({
-      name,
       username,
       email,
       profileImg,
@@ -114,7 +112,6 @@ exports.registerCreator = async (req, res, next) => {
     // set id in the payload as well to be able to get id when log
     const payload = {
       id: creator.id,
-      name,
       username,
       email,
       profileImg,
@@ -138,9 +135,15 @@ exports.registerCreator = async (req, res, next) => {
  */
 exports.loginCreator = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { emailOrUsername, password } = req.body;
 
-    const creator = await Creator.findOne({ where: { username } });
+    const creator = await Creator.findOne({
+      where: {
+        [Op.or]: [{ email: emailOrUsername }, { username: emailOrUsername }],
+      },
+    });
+    console.log("creatorrr", creator);
+
     if (!creator)
       return res
         .status(400)
@@ -181,13 +184,13 @@ exports.loginCreator = async (req, res, next) => {
  */
 exports.updateCreator = async (req, res, next) => {
   try {
-    const { name, username, email, profileImg, password, role } = req.body;
+    const { name, username, email, profileImg, role } = req.body;
     const { id } = req.params;
 
-    const hashedPassword = await bcrypt.hash(
-      password,
-      +process.env.BCRYPT_SALT
-    );
+    // const hashedPassword = await bcrypt.hash(
+    //   password,
+    //   +process.env.BCRYPT_SALT
+    // );
 
     await Creator.update(
       {
@@ -195,7 +198,6 @@ exports.updateCreator = async (req, res, next) => {
         username,
         email,
         profileImg,
-        password: hashedPassword,
         role,
       },
       { where: { id } }

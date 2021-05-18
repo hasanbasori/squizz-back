@@ -12,6 +12,19 @@ module.exports = (sequelize, DataTypes) => {
       link: {
         type: DataTypes.STRING,
       },
+      plays: {
+        type: DataTypes.INTEGER,
+      },
+      players: {
+        type: DataTypes.INTEGER,
+      },
+      favorites: {
+        type: DataTypes.INTEGER,
+      },
+      createdDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      }
     },
     {
       underscored: true,
@@ -44,8 +57,8 @@ module.exports = (sequelize, DataTypes) => {
         name: "quizId",
         allowNull: false,
       },
-      onUpdate: "RESTRICT",
-      onDelete: "RESTRICT",
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     });
 
     // one quiz to many UserHistory
