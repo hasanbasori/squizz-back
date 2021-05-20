@@ -1,9 +1,13 @@
 require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
-const server = require('http').createServer();
-const io = require("socket.io")(server)
 const app = express();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http, {
+  cors: {
+    origin: "*",
+  },
+});
 const errorMiddleware = require("./middlewares/error");
 const CollectionRoute = require("./routes/CollectionRoute");
 const CreatorRoute = require("./routes/CreatorRoute");
@@ -35,11 +39,18 @@ app.use(errorMiddleware);
 
 // sequelize.sync({ force: true}).then(() => console.log('DB sync'))
 
-const port = process.env.PORT;
-app.listen(port, () => console.log(`server is running on port ${port}`));
+io.on("connection", (socket) => {
+  console.log("creator connect");
 
-// io.on('connection', client => {
-//   client.on('event', data => { /* … */ });
-//   client.on('disconnect', () => { /* … */ });
-// });
-// server.listen(3000);
+  socket.on("hello", (arg) => {
+    console.log(arg);
+  });
+  // socket.emit("hello", "world");
+
+  socket.on("disconnect", () => {
+    /* … */
+  });
+});
+
+const port = process.env.PORT;
+http.listen(port, () => console.log(`server is running on port ${port}`));

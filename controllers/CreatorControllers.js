@@ -186,17 +186,26 @@ exports.updateCreator = async (req, res, next) => {
   try {
     const { name, username, email, profileImg, role } = req.body;
     const { id } = req.params;
+    const { username: creatorUsername, email: creatorEmail } = req.creator;
 
     // const hashedPassword = await bcrypt.hash(
     //   password,
     //   +process.env.BCRYPT_SALT
     // );
 
+    const validatedUsername = await Creator.findOne({ where: { username } });
+    if (validatedUsername && creatorUsername !== username)
+      return res.status(400).json({ message: "username is exist" });
+
+    const validatedEmail = await Creator.findOne({ where: { email } });
+    if (validatedEmail && creatorEmail !== email)
+      return res.status(400).json({ message: "email is exist" });
+
     await Creator.update(
       {
         name,
-        username,
-        email,
+        username: username === creatorUsername ? creatorUsername : username,
+        email: email === creatorEmail ? creatorEmail : email,
         profileImg,
         role,
       },
@@ -204,6 +213,63 @@ exports.updateCreator = async (req, res, next) => {
     );
 
     res.status(200).json({ message: "Successfully Creator's Info Updated!." });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// update
+/**
+ * @type {import('express').RequestHandler}
+ */
+exports.changePassword = async (req, res, next) => {
+  try {
+    const { oldPassword, newPassword, repeatNewPassword } = req.body;
+    const { id } = req.params;
+
+    if (!oldPassword)
+      return res.status(400).json({ message: "old password is required" });
+    if (!newPassword)
+      return res.status(400).json({ message: "new password is required" });
+    if (!repeatNewPassword)
+      return res
+        .status(400)
+        .json({ message: "repeat new password is required" });
+
+    const creator = await Creator.findOne({
+      where: {
+        id,
+      },
+    });
+
+    const isMatch = await bcrypt.compare(oldPassword, creator.password);
+    if (!isMatch)
+      return res.status(400).json({ message: "old password incorrect!" });
+
+    if (newPassword !== repeatNewPassword)
+      return res.status(400).json({
+        message: "new password and repeat new password is not match!",
+      });
+
+    if (!newPassword.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/))
+      return res.status(400).json({
+        message:
+          "The number of password must be between 8 and 16 characters and must have Capital letters",
+      });
+
+    const hashedPassword = await bcrypt.hash(
+      newPassword,
+      +process.env.BCRYPT_SALT
+    );
+
+    await Creator.update(
+      {
+        password: hashedPassword,
+      },
+      { where: { id } }
+    );
+
+    res.status(200).json({ message: "Change password Successfully!." });
   } catch (err) {
     next(err);
   }

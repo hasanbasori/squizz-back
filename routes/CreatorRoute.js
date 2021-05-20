@@ -11,6 +11,11 @@ router.put(
   CreatorControllers.protectCreator,
   CreatorControllers.updateCreator
 );
+router.put(
+  "/change-password/:id",
+  CreatorControllers.protectCreator,
+  CreatorControllers.changePassword
+);
 router.delete(
   "/:id",
   CreatorControllers.protectCreator,
